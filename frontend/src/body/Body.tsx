@@ -1,6 +1,6 @@
 import Dashboard from "@/pages/Dashboard";
 import IssueBooks from "@/pages/IssueBooks";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { BodyContaier } from "./styles";
 import ViewIssuedBooks from "@/pages/ViewIssuedBooks";
 import ManageBooks from "@/pages/ManageBooks";
@@ -9,12 +9,23 @@ import Settings from "@/pages/Settings";
 import AddUserForm from "@/components/add-user/AddUserForm";
 import ManageStudents from "@/pages/ManageStudents";
 import Student from "@/pages/Student";
+import { IconButton } from "@/styles/button";
+import { BackIcon } from "@/components/Icons";
 
 function Body() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    console.log("handle back clicked");
+    navigate(-1);
+  };
   return (
     <>
       <BodyContaier>
+        <IconButton onClick={handleBack}>
+          <BackIcon size={25} />
+        </IconButton>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/issue" element={<IssueBooks />}></Route>

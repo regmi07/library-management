@@ -50,6 +50,7 @@ function ManageBooksTable() {
   };
 
   const handleEditModalConfirmYes = (payload: any) => {
+    // console.log(payload);
     updateBookRequest(payload.isbn, payload)
       .then((response) => {
         console.log(response);

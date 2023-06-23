@@ -6,6 +6,7 @@ import {
   IsNumber,
   IsUUID,
   IsNotEmpty,
+  Min,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 
@@ -34,6 +35,7 @@ export class CreateBookDto {
   @ApiProperty({ example: 'number of total books' })
   @IsNumber()
   @Transform(({ value }) => Number.parseInt(value))
+  @Min(1)
   totalCopies: number;
 
   @ApiProperty({ example: 'number of available books' })

@@ -78,6 +78,9 @@ function FormModal({
     const updatedCategory = category ? category.catgory_id : null;
     const updatedSubCategory = subCategory ? subCategory.subCategoryId : null;
 
+    console.log(updatedCategory);
+    console.log(updatedSubCategory);
+
     let payload;
 
     if (updatedCategory || subCategory) {
@@ -86,9 +89,9 @@ function FormModal({
         category: updatedCategory,
         subCategory: updatedSubCategory,
       };
+    } else {
+      payload = updatedData;
     }
-
-    payload = updatedData;
 
     onConfirmYes(payload);
   };

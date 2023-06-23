@@ -34,6 +34,10 @@ function SelectComponent({
       setSelectedValue(value);
       setValue(value[idKey]);
     }
+    // setSelectedValue(value);
+    // if (setValue) {
+    //   setValue(value);
+    // }
   };
 
   const handleInputChange = (input: any) => {

@@ -95,7 +95,8 @@ export class IssuesService {
       .createQueryBuilder('issue')
       .leftJoinAndSelect('issue.book', 'book')
       .leftJoinAndSelect('book.category', 'category')
-      .leftJoinAndSelect('issue.student', 'student');
+      .leftJoinAndSelect('issue.student', 'student')
+      .orderBy('issue.issueDate', 'DESC');
 
     if (searchParams.bookIsbn) {
       queryBuilder.andWhere('book.isbn LIKE :isbn', {
@@ -177,15 +178,15 @@ export class IssuesService {
   }
 
   findOne(id: number, option?: FindOneOptions<Issue>) {
-    // const { where, ...rest } = option;
-    // return this.issueRepo.findOne({
-    //   where: {
-    //     id,
-    //     ...where,
-    //   },
-    //   ...rest,
-    // });
-    return this.getExpiredIssues();
+    const { where, ...rest } = option;
+    return this.issueRepo.findOne({
+      where: {
+        id,
+        ...where,
+      },
+      ...rest,
+    });
+    // return this.getExpiredIssues();
   }
 
   async update(id: number, updateIssueDto: UpdateIssueDto) {
@@ -310,6 +311,7 @@ export class IssuesService {
           latestRenewDate: Between(startDate, endDate),
         },
       ],
+
       relations: {
         student: true,
         book: true,

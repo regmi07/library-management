@@ -1,9 +1,10 @@
 import { getBooks } from "@/adapters/books.adapter/books";
 import PageSizeDropdown from "@/components/PageSizeDropdown";
 import SearchBox from "@/components/SearchBox";
+import { PrimaryButton } from "@/components/issue-books/IssueBookForm/styles";
 import { useBooksContext } from "@/contexts/manage-books_context/ViewBookContext";
 import flat from "flat";
-import { createRef, useEffect, useState } from "react";
+import { createRef, useEffect, useRef, useState } from "react";
 import { CSVLink } from "react-csv";
 
 const options = {
@@ -14,19 +15,27 @@ const options = {
   Author: "authors",
 };
 
+const headers = [
+  { label: "ISBN", key: "isbn" },
+  { label: "Title", key: "title" },
+  { label: "Summary", key: "summary" },
+  { label: "Authors", key: "authors" },
+  { label: "Publisher", key: "publisher" },
+  { label: "Published Date", key: "publishedDate" },
+  { label: "Total Copies", key: "totalCopies" },
+  { label: "Available Copies", key: "availableCopies" },
+  { label: "Category", key: "category.category" },
+  { label: "Sub Category", key: "subCategory.name" },
+];
+
 function ViewBookSearchBar() {
   const [flatenedData, setFlatenedData] = useState([]);
 
-  // const DownloadCsvRef = createRef();
-
+  const csvDownloadRef = useRef<
+    CSVLink & HTMLAnchorElement & { link: HTMLAnchorElement }
+  >(null);
   const { queryParams, updateQueryParams, searchBookDebounced } =
     useBooksContext();
-
-  // useEffect(() => {
-  //   if (flatenedData.length > 0) {
-  //     DownloadCsvRef.current.link.click();
-  //   }
-  // });
 
   // rest of the table implementation...
   const setPageSize = (value: number) => {
@@ -34,14 +43,15 @@ function ViewBookSearchBar() {
   };
 
   const downloadCsv = async () => {
-    console.log(queryParams);
     const data = await getBooks({ ...queryParams, limit: 100 });
     const flatened = data.data.data.map((d: any) => flat(d));
     setFlatenedData(flatened);
-    console.log(flatenedData);
-  };
+    setTimeout(() => {
+      csvDownloadRef?.current?.link.click();
+    }, 500);
 
-  console.log(flatenedData);
+    // console.log(flatenedData);
+  };
 
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -59,21 +69,19 @@ function ViewBookSearchBar() {
           display: "flex",
           gap: ".5em",
           padding: "1em",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
         <CSVLink
           data={flatenedData}
           filename={"books.csv"}
-          // ref={DownloadCsvRef}
-          style={{
-            backgroundColor: "coral",
-            padding: ".25em .5em",
-            borderRadius: "5px",
-          }}
-          onClick={downloadCsv}
-        >
-          Download csv
-        </CSVLink>
+          headers={headers}
+          ref={csvDownloadRef}
+        />
+        <PrimaryButton maxWidth="90px" onClick={downloadCsv}>
+          Export
+        </PrimaryButton>
         <SearchBox
           options={options}
           searchDataDebounced={searchBookDebounced}

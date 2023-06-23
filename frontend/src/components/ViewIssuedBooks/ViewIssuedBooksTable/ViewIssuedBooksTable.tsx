@@ -52,6 +52,7 @@ function ViewIssuedBooksTable() {
             <th scope="col">Book Name</th>
             <th scope="col">Issued On</th>
             <th scope="col">Due Date</th>
+            <th scope="col">Latest Renew Date</th>
             <th scope="col">Fine</th>
             <th scope="col">Status</th>
             <th scope="col">Actions</th>
@@ -68,6 +69,11 @@ function ViewIssuedBooksTable() {
                   <td>{issue?.book?.title}</td>
                   <td>{issue?.issueDate?.substring(0, 10)}</td>
                   <td>{issue?.expireDate?.substring(0, 10)}</td>
+                  <td>
+                    {issue?.latestRenewDate
+                      ? issue?.latestRenewDate?.substring(0, 10)
+                      : "N/A"}
+                  </td>
                   <td>Rs. {issue?.fine}</td>
                   <td>
                     <Status

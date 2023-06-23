@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 function Student() {
   const { id } = useParams();
-  console.log(id);
   return (
     <>
       <StudentInfo collegeId={id} />

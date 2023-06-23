@@ -9,20 +9,15 @@ function SubCategorySelectComponent({
   onSelectedChange,
 }: any) {
   const [subCategories, setSubCategories] = useState(null);
-  // const [selectedValue, setSelectedValue] = useState(selected);
 
   useEffect(() => {
     getAllSubCategoryByCategories(selectedCategory?.catgory_id).then(
       (subCategories) => {
         setSubCategories(subCategories.data.data);
+        onSelectedChange(subCategories.data.data[0]);
       }
     );
   }, [selectedCategory]);
-
-  // const setValue = (id: string) => {
-  //   console.log(id);
-  //   console.log("value seted");
-  // };
 
   return (
     <>
@@ -32,7 +27,6 @@ function SubCategorySelectComponent({
           idKey="subCategoryId"
           labelKey="name"
           data={subCategories}
-          // setValue={setValue}
           selectedValue={selectedSubCategory}
           setSelectedValue={onSelectedChange}
         />

@@ -5,6 +5,7 @@ import UploadAndDisplayImage from "../UploadAndDisplayImage/UploadAndDisplayImag
 import { addBook, getBooks } from "@/adapters/books.adapter/books";
 import { toast } from "react-toastify";
 import { Label, MainContainer, TextFieldWrapper } from "./style";
+import SubCategorySelectComponent from "../SelectComponents/SubCategorySelectComponent";
 
 interface IBook {
   isbn: string;
@@ -12,7 +13,8 @@ interface IBook {
   authors: string;
   publisher?: string;
   publishedDate?: string;
-  category: string;
+  category: any;
+  subCategory: any;
   totalCopies: number;
   summary: string;
   image: File | null;
@@ -25,6 +27,7 @@ const initialState = {
   publisher: "",
   publishedDate: "",
   category: "",
+  subCategory: "",
   totalCopies: 0,
   summary: "",
   image: null,
@@ -35,10 +38,6 @@ function AddBookForm() {
   const handleBookDetailsChange = (event: ChangeEvent<HTMLInputElement>) => {
     setBookDetails({ ...bookDetails, [event.target.name]: event.target.value });
   };
-
-  // const changeImage = (imageFile: File) => {
-  //   setBookDetails({ ...bookDetails, image: imageFile });
-  // };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Tab") {
@@ -52,8 +51,31 @@ function AddBookForm() {
     }
   };
 
+  const handleCategoryChange = (value: any) => {
+    setBookDetails((prevData: any) => ({
+      ...prevData,
+      category: value,
+      subCategory: null,
+    }));
+  };
+
+  const handleSubcategoryChange = (value: any) => {
+    console.log("handle subcategory change called");
+    console.log(value);
+    setBookDetails((prevData: any) => ({
+      ...prevData,
+      subCategory: value,
+    }));
+  };
+
   const addNewBook = () => {
-    addBook(bookDetails)
+    console.log(bookDetails);
+    const newBook = {
+      ...bookDetails,
+      category: bookDetails.category?.catgory_id,
+      subCategory: bookDetails.subCategory?.subCategoryId,
+    };
+    addBook(newBook)
       .then((response) => {
         if (response.status === 201) {
           setBookDetails(initialState);
@@ -96,7 +118,15 @@ function AddBookForm() {
           required
         />
       </TextFieldWrapper>
-      <CategorySelectComponent />
+      <CategorySelectComponent
+        selected={bookDetails.category}
+        onSelectedChange={handleCategoryChange}
+      />
+      <SubCategorySelectComponent
+        selectedCategory={bookDetails.category ?? ""}
+        selectedSubCategory={bookDetails.subCategory}
+        onSelectedChange={handleSubcategoryChange}
+      />
       <TextFieldWrapper>
         <Label htmlFor="authors">Authors</Label>
         <Input

@@ -15,7 +15,7 @@ import { GiSettingsKnobs } from "react-icons/gi";
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { MdAutorenew } from "react-icons/md";
 import { BiEdit, BiShow } from "react-icons/bi";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { RiDeleteBin6Line, RiArrowGoBackFill } from "react-icons/ri";
 
 export {
   AiFillDashboard as DashboardIcon,
@@ -36,4 +36,5 @@ export {
   BiShow as ViewIcon,
   AiOutlinePhone as PhoneIcon,
   AiOutlineMail as EmailIcon,
+  RiArrowGoBackFill as BackIcon,
 };

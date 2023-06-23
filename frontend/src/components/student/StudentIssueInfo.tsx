@@ -18,7 +18,6 @@ function StudentIssueInfo({ collegeId }: any) {
     else return "Active";
   };
 
-  console.log(issues);
   return (
     <TableContainer>
       <CustomTable>

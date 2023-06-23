@@ -5,18 +5,13 @@ import SelectComponent from "./SelectComponent";
 
 function CategorySelectComponent({ selected, onSelectedChange }: any) {
   const [categories, setCategories] = useState(null);
-  // const [selectedValue, setSelectedValue] = useState(selected);
 
   useEffect(() => {
     getAllCategories().then((categories) => {
       setCategories(categories.data.data);
+      onSelectedChange(categories.data.data[0]);
     });
   }, []);
-
-  // const setValue = (id: string) => {
-  //   console.log(id);
-  //   console.log("value seted");
-  // };
 
   return (
     <>
@@ -26,7 +21,6 @@ function CategorySelectComponent({ selected, onSelectedChange }: any) {
           idKey="catgory_id"
           labelKey="category"
           data={categories}
-          // setValue={setValue}
           selectedValue={selected}
           setSelectedValue={onSelectedChange}
         />
