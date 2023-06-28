@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const TableContainer = styled.div``;
 
-export const CustomTable = styled.table`
+export const CustomTable = styled.table<any>`
   width: 100%;
   text-align: left;
   border-collapse: collapse;
@@ -11,7 +11,7 @@ export const CustomTable = styled.table`
   tr,
   td,
   th {
-    padding: 1.25em;
+    padding: ${(props) => (props.padding ? props.padding : "1.25em")};
   }
 
   thead {

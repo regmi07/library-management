@@ -1,7 +1,6 @@
 import { KeyboardEvent, ChangeEvent, useState } from "react";
 import { Input, PrimaryButton } from "../issue-books/IssueBookForm/styles";
 import CategorySelectComponent from "../SelectComponents/CategorySelectComponent";
-import UploadAndDisplayImage from "../UploadAndDisplayImage/UploadAndDisplayImage";
 import { addBook, getBooks } from "@/adapters/books.adapter/books";
 import { toast } from "react-toastify";
 import { Label, MainContainer, TextFieldWrapper } from "./style";

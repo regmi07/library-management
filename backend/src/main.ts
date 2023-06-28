@@ -25,7 +25,7 @@ async function bootstrap() {
     }),
   );
   const PORT = 3500;
-  await app.listen(PORT, () => {
+  await app.listen(PORT, '0.0.0.0', () => {
     console.log(`Backend server is running on port ${PORT}`);
   });
 }

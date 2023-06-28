@@ -19,16 +19,22 @@ export const ModalWrapper = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  // background-color: rgba(255, 255, 255, 0.8);
+  align-items: center;
 `;
 
 export const ModalContent = styled.div`
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  max-width: 500px;
+  max-width: 550px;
+  margin-top: 1em;
   width: 100%;
   padding: 20px;
   position: relative;
+  overflow-x: hidden;
 `;
 
 export const ModalTitle = styled.h2`
@@ -41,11 +47,11 @@ export const ModalMessage = styled.p`
   margin: 20px 0;
 `;
 
-export const ModalForm = styled.form`
+export const ModalForm = styled.form<any>`
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
-  // flex-direction: row;
+  max-width: ${(props) => (props.maxWidth ? props.maxWidth : "100%")};
 `;
 
 export const ModalInput = styled.input`

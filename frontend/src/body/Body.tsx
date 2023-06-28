@@ -17,9 +17,9 @@ function Body() {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    console.log("handle back clicked");
     navigate(-1);
   };
+
   return (
     <>
       <BodyContaier>
@@ -27,7 +27,7 @@ function Body() {
           <BackIcon size={25} />
         </IconButton>
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Dashboard />}></Route>
+          <Route index path="/" element={<Dashboard />}></Route>
           <Route path="/issue" element={<IssueBooks />}></Route>
           <Route path="/issued" element={<ViewIssuedBooks />}></Route>
           <Route path="/manage-books" element={<ManageBooks />}></Route>
