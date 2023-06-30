@@ -8,6 +8,7 @@ import {
   UsersIcon,
   SettingsIcon,
   AddUserIcon,
+  CategoryIcon,
 } from "@/components/Icons";
 
 export const SIDEBAR_DATA = [
@@ -65,5 +66,11 @@ export const SIDEBAR_DATA = [
     name: "Manage Settings",
     path: "/settings",
     icon: SettingsIcon,
+  },
+  {
+    id: 11,
+    name: "Category",
+    path: "/category",
+    icon: CategoryIcon,
   },
 ];

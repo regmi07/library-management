@@ -16,7 +16,7 @@ import { BsArrowReturnLeft } from "react-icons/bs";
 import { MdAutorenew } from "react-icons/md";
 import { BiEdit, BiShow } from "react-icons/bi";
 import { RiDeleteBin6Line, RiArrowGoBackFill } from "react-icons/ri";
-
+import { BiCategoryAlt } from "react-icons/bi";
 export {
   AiFillDashboard as DashboardIcon,
   AiOutlineUser as ProfileIcon,
@@ -37,4 +37,5 @@ export {
   AiOutlinePhone as PhoneIcon,
   AiOutlineMail as EmailIcon,
   RiArrowGoBackFill as BackIcon,
+  BiCategoryAlt as CategoryIcon,
 };

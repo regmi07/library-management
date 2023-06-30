@@ -53,8 +53,9 @@ export const IssueDateContainer = styled.div`
   gap: 2em;
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<any>`
   height: 40px;
   width: 100%;
   padding: 0.6em;
+  width: ${(props) => (props.maxWidth ? props.maxWidth : "100%")};
 `;

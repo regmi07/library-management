@@ -24,6 +24,7 @@ export class BookService {
   ) {}
 
   async create(createBookDto: CreateBookDto) {
+    console.log('create book called');
     const book = await this.bookRepo.findOne({
       where: { isbn: createBookDto.isbn },
     });
