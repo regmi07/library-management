@@ -16,6 +16,12 @@ export const addStudent = (studentDetails: any) => {
   });
 };
 
+export const bulkAddStudent = (csvFileFormData: any) => {
+  return post("students/bulk", csvFileFormData, {
+    "Content-Type": "multipart/form-data",
+  });
+};
+
 export const getStudentById = (collegeId: string) => {
   return get(`students/${collegeId}`);
 };

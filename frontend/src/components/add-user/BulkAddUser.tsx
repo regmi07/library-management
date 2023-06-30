@@ -1,8 +1,8 @@
-import { bulkAddBook } from "@/adapters/books.adapter/books";
+import { bulkAddStudent } from "@/adapters/student.adapter/student";
 import FileInputModal from "@/components/Modal/FIleInputModal";
 import React from "react";
 
-function BulkAddBook() {
+function BulkAddStudent() {
   const [open, setOpen] = React.useState(false);
 
   const handleOnClose = () => {
@@ -13,13 +13,13 @@ function BulkAddBook() {
     const formData = new FormData();
     formData.append("file", csvFile);
 
-    bulkAddBook(formData);
+    bulkAddStudent(formData);
     handleOnClose();
   };
 
   return (
     <div>
-      <button onClick={() => setOpen(true)}>Bulk add book</button>
+      <button onClick={() => setOpen(true)}>Bulk add Student</button>
       <FileInputModal
         isOpen={open}
         onClose={handleOnClose}
@@ -29,4 +29,4 @@ function BulkAddBook() {
   );
 }
 
-export default BulkAddBook;
+export default BulkAddStudent;

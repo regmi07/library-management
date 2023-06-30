@@ -6,7 +6,7 @@ import ViewIssuedBooks from "@/pages/ViewIssuedBooks";
 import ManageBooks from "@/pages/ManageBooks";
 import AddBook from "@/pages/AddBook";
 import Settings from "@/pages/Settings";
-import AddUserForm from "@/components/add-user/AddUserForm";
+import AddUser from "@/pages/AddUser";
 import ManageStudents from "@/pages/ManageStudents";
 import Student from "@/pages/Student";
 import { IconButton } from "@/styles/button";
@@ -34,7 +34,7 @@ function Body() {
           <Route path="/manage-books" element={<ManageBooks />}></Route>
           <Route path="/add-book" element={<AddBook />}></Route>
           <Route path="/settings" element={<Settings />}></Route>
-          <Route path="/add-user" element={<AddUserForm />}></Route>
+          <Route path="/add-user" element={<AddUser />}></Route>
           <Route path="/manage-user" element={<ManageStudents />}></Route>
           <Route path="/user/:id" element={<Student />}></Route>
           <Route path="/category" element={<Category />}></Route>

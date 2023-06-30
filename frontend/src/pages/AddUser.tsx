@@ -1,9 +1,10 @@
 import AddUserForm from "@/components/add-user/AddUserForm";
-import React from "react";
+import BulkAddStudent from "@/components/add-user/BulkAddUser";
 
 function AddUser() {
   return (
     <div>
+      <BulkAddStudent />
       <AddUserForm />
     </div>
   );

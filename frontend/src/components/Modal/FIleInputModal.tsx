@@ -17,9 +17,10 @@ import { bulkAddBook } from "@/adapters/books.adapter/books";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  saveData: (csvFile: any) => void;
 }
 
-function FileInputModal({ isOpen, onClose }: ModalProps) {
+function FileInputModal({ isOpen, onClose, saveData }: ModalProps) {
   const [csvData, setCSVData] = React.useState<any>(null);
   const [csvFile, setCsvFile] = React.useState<any>(null);
 
@@ -29,13 +30,13 @@ function FileInputModal({ isOpen, onClose }: ModalProps) {
     setCsvFile(data.file);
   };
 
-  const handleCsvFileSubmit = () => {
-    const formData = new FormData();
-    formData.append("file", csvFile);
+  // const handleCsvFileSubmit = () => {
+  //   const formData = new FormData();
+  //   formData.append("file", csvFile);
 
-    bulkAddBook(formData);
-    onClose();
-  };
+  //   bulkAddBook(formData);
+  //   onClose();
+  // };
 
   if (!isOpen) {
     return null;
@@ -52,7 +53,7 @@ function FileInputModal({ isOpen, onClose }: ModalProps) {
           </ModalForm>
           {csvData?.length > 0 && <Preview_Csv data={csvData} />}
           <ModalButtonWrapper>
-            <ModalButton onClick={handleCsvFileSubmit}>Submit</ModalButton>
+            <ModalButton onClick={() => saveData(csvFile)}>Submit</ModalButton>
             <ModalButton onClick={onClose}>Cancel</ModalButton>
           </ModalButtonWrapper>
         </ModalContent>
