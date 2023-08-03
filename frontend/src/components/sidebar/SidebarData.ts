@@ -9,6 +9,7 @@ import {
   SettingsIcon,
   AddUserIcon,
   CategoryIcon,
+  LogsIcon,
 } from "@/components/Icons";
 
 export const SIDEBAR_DATA = [
@@ -31,12 +32,6 @@ export const SIDEBAR_DATA = [
     path: "/add-book",
     icon: BookIcon,
   },
-  // {
-  //   id: 5,
-  //   name: "Manage Fines",
-  //   path: "/fines",
-  //   icon: MoneyIcon,
-  // },
   {
     id: 6,
     name: "Issue Book",
@@ -72,5 +67,11 @@ export const SIDEBAR_DATA = [
     name: "Category",
     path: "/category",
     icon: CategoryIcon,
+  },
+  {
+    id: 12,
+    name: "Logs",
+    path: "/logs",
+    icon: LogsIcon,
   },
 ];

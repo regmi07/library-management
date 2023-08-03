@@ -8,8 +8,7 @@ interface ImagePropsType {
 }
 
 const defaultImage: string =
-  "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=1480&t=st=1682235009~exp=1682235609~hmac=3fe4be2bc841c26481d012d872dc6aec15270f90790c67bd63e37281f29b644a";
-
+  "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn3.iconfinder.com%2Fdata%2Ficons%2Fonline-learning-flat-1%2F64%2F13_male_student_avatar_people_graduate_education_study-1024.png&f=1&nofb=1&ipt=41f0f9b94cb8542323618589c29774aef6081fd11f6e86c3fcd37c9f7b6faa5f&ipo=images";
 function Image({
   imageUrl,
   alt,

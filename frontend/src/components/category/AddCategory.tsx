@@ -5,6 +5,7 @@ import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import { addCategory } from "@/adapters/categories.adapter/categories";
 import { toast } from "react-toastify";
+import { InputDiv } from "../settings/styles";
 
 function AddCategory() {
   const [category, setCategory] = useState({
@@ -34,7 +35,7 @@ function AddCategory() {
 
   return (
     <div>
-      <div>
+      <InputDiv>
         <Label htmlFor="category">Category</Label>
         <Input
           name="category"
@@ -42,11 +43,11 @@ function AddCategory() {
           maxWidth="600px"
           onChange={handleCategoryChange}
         />
-      </div>
-      <div style={{ marginTop: "1em" }}>
+      </InputDiv>
+      <InputDiv style={{ marginTop: "1em" }}>
         <Label>Sub Category</Label>
         <TagsInput value={category.subCategories} onChange={handleTagsChange} />
-      </div>
+      </InputDiv>
       <PrimaryButton maxWidth="200px" onClick={handleAdd}>
         Add
       </PrimaryButton>

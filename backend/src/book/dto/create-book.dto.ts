@@ -1,19 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsISBN,
-  IsString,
-  IsOptional,
-  IsNumber,
-  IsUUID,
-  IsNotEmpty,
-  Min,
-} from 'class-validator';
+import { IsISBN, IsString, IsOptional, IsNumber, Min } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class CreateBookDto {
   @ApiProperty({ example: '1212124321', type: 'isbn' })
-  @IsISBN()
+  @IsISBN(10, {
+    message: (value) => {
+      console.log(value);
+      return value.value;
+    },
+  })
   @Transform(({ value }) => {
+    console.log(value);
     if (typeof value === 'number') return value;
     return value.replace(/[\s-]/g, '');
   })
@@ -36,7 +34,7 @@ export class CreateBookDto {
   @IsNumber()
   @Transform(({ value }) => Number.parseInt(value))
   @Min(1)
-  totalCopies: number;
+  totalCopies = 0;
 
   @ApiProperty({ example: 'number of available books' })
   @IsNumber()
@@ -53,18 +51,18 @@ export class CreateBookDto {
   @IsOptional()
   publishedDate?: string;
 
-  @IsUUID()
-  @IsNotEmpty()
-  @IsOptional()
-  category?: string;
+  // @IsUUID()
+  // @IsNotEmpty()
+  // @IsOptional()
+  // category?: string;
 
-  @IsUUID()
-  @IsNotEmpty()
-  @IsOptional()
-  subCategory?: string;
+  // @IsUUID()
+  // @IsNotEmpty()
+  // @IsOptional()
+  // subCategory?: string;
 
   @ApiProperty({ example: 'https:google.com' })
   @IsString()
   @IsOptional()
-  image: string;
+  image?: string;
 }

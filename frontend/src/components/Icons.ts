@@ -8,7 +8,7 @@ import {
   AiOutlinePhone,
   AiOutlineMail,
 } from "react-icons/ai";
-import { SiBookstack } from "react-icons/si";
+import { SiBookstack, SiLogstash } from "react-icons/si";
 import { FaMoneyBillAlt, FaUsers } from "react-icons/fa";
 import { CiViewList } from "react-icons/ci";
 import { GiSettingsKnobs } from "react-icons/gi";
@@ -38,4 +38,5 @@ export {
   AiOutlineMail as EmailIcon,
   RiArrowGoBackFill as BackIcon,
   BiCategoryAlt as CategoryIcon,
+  SiLogstash as LogsIcon,
 };

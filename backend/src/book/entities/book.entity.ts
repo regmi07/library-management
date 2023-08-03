@@ -27,7 +27,7 @@ export class Book {
   publisher?: string;
 
   @Column({ nullable: true })
-  publishedDate?: string;
+  availabledDate?: string;
 
   @Column({ nullable: true, default: 0 })
   totalCopies: number;
@@ -43,12 +43,14 @@ export class Book {
 
   @ManyToOne(() => Category, (category) => category.books, {
     onDelete: 'CASCADE',
+    nullable: true,
   })
   @JoinColumn({ name: 'category_id' })
   category: Category;
 
   @ManyToOne(() => SubCategory, (subCategory) => subCategory.books, {
     onDelete: 'CASCADE',
+    nullable: true,
   })
   @JoinColumn({ name: 'subCategoryId' })
   subCategory: SubCategory;

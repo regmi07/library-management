@@ -3,15 +3,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 
-import { Repository, FindOptionsWhere, Like, ILike } from 'typeorm';
+import { Repository, FindOptionsWhere, ILike } from 'typeorm';
 import { Student } from './entities/student.entity';
 import { SettingsService } from 'src/settings/settings.service';
 import { Issue } from 'src/issues/entities/issue.entity';
 import { CsvService } from 'src/csv/csv.service';
+import { LogsService } from 'src/logs/logs.service';
 @Injectable()
 export class StudentService {
   constructor(
     private readonly csvService: CsvService,
+    private readonly logService: LogsService,
     @InjectRepository(Student)
     private readonly studentRepository: Repository<Student>,
     @InjectRepository(Issue) private readonly issueRepo: Repository<Issue>,
@@ -78,6 +80,66 @@ export class StudentService {
     );
   }
 
+  async createStudentOnBulk(datas: any[], images) {
+    let message = '';
+    let successCount = 0;
+
+    for (const student of datas) {
+      try {
+        const studentE = await this.studentRepository.create(
+          student as Student,
+        );
+
+        const user_image = images.find((image) => {
+          console.log('from image: ', image.originalname.split('.')[0]);
+          console.log(`from student: ${student.collegeId} ${student.name}`);
+          return (
+            image.originalname.split('.')[0] ===
+            `${student.collegeId} ${student.name}`
+          );
+        });
+
+        studentE.avatar = `http://localhost:3500/${user_image.path}`;
+        await this.studentRepository.insert(studentE);
+
+        successCount++;
+      } catch (err) {
+        console.log('This is an error');
+        message += `${err.parameters[1]} ${
+          err.parameters[2]
+        } -> ${err.driverError.toString()}\n`;
+        console.log(err);
+      }
+    }
+
+    if (datas.length == successCount) {
+      return await this.logService.create({
+        message: 'All the students were added to database successfully',
+        status: 'success',
+      });
+    } else if (successCount) {
+      await this.logService.create({
+        message: `Following students failed to be added on database: \n${message}`,
+        status: 'error',
+      });
+      return {
+        message: `${successCount} students has been added to database and  ${
+          datas.length - successCount
+        } students failed to be added on database. Please view the logs to find out more information.`,
+      };
+    } else {
+      await this.logService.create({
+        message: `All the students failed to be added on database: \n${message}`,
+        status: 'error',
+      });
+
+      return {
+        message:
+          'All the students failed to be added on database. Please view logs to find out more information',
+      };
+    }
+  }
+
   async findAll({
     skip,
     limit,
@@ -90,13 +152,7 @@ export class StudentService {
     collegeId?: string;
   }) {
     const where: FindOptionsWhere<Student>[] = [];
-    // if (search) {
-    //   where = [
-    //     { name: ILike(`%${search}%`) },
-    //     { collegeId: ILike(`%${search}%`) },
-    //     { contactNumber: Like(`%${search}%`) },
-    //   ];
-    // }
+
     if (name) {
       where.push({ name: ILike(`%${name}%`) });
     }
@@ -105,17 +161,14 @@ export class StudentService {
       where.push({ collegeId: ILike(`${collegeId}`) });
     }
     const students = await this.studentRepository.find({
-      where,
       skip,
       take: limit,
+      where: {
+        ...where,
+      },
     });
     const total = await this.studentRepository.count();
-    // const data = students.map((each) => ({
-    //   ...each,
-    //   email: each?.collegeId
-    //     ? `${each.collegeId}${settings.emailSuffix}`
-    //     : null,
-    // }));
+
     return { total, data: students };
   }
 

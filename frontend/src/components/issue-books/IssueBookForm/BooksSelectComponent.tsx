@@ -16,6 +16,11 @@ function BooksSelectComponent() {
     });
   }, []);
 
+  const updateSelectedValue = (data: any) => {
+    setIsbn(data.isbn, data.availableCopies);
+    setSelectedValue(data);
+  };
+
   return (
     <>
       <InputContainer>
@@ -25,9 +30,8 @@ function BooksSelectComponent() {
           labelKey="isbn"
           selectFor="books"
           data={books}
-          setValue={setIsbn}
           selectedValue={selectedValue}
-          setSelectedValue={setSelectedValue}
+          setSelectedValue={updateSelectedValue}
         />
       </InputContainer>
       <InputContainer>
@@ -37,9 +41,8 @@ function BooksSelectComponent() {
           labelKey="title"
           selectFor="books"
           data={books}
-          setValue={setIsbn}
           selectedValue={selectedValue}
-          setSelectedValue={setSelectedValue}
+          setSelectedValue={updateSelectedValue}
         />
       </InputContainer>
     </>

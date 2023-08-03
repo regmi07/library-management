@@ -1,8 +1,19 @@
 import styled from "styled-components";
 
+export const FormStyle = styled.form`
+  width: 1000px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+`;
+
+export const InputDiv = styled.div`
+  width: 100%;
+  max-width: 450px;
+`;
+
 export const ProfileData = styled.div`
   margin-top: 12px;
-  //   text-align: center;
 `;
 
 export const AdminInfo = styled.p`
@@ -23,7 +34,7 @@ export const AvatarImage = styled.img`
   border-radius: 50%;
 `;
 
-export const Label = styled.label`
+export const ImageLabel = styled.label`
   text-align: center;
   display: flex;
   align-items: center;
@@ -36,4 +47,9 @@ export const Label = styled.label`
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
   cursor: pointer;
   font-weight: normal;
+`;
+
+export const Label = styled.label`
+  display: block;
+  margin-bottom: 0.85em;
 `;

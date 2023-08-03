@@ -93,7 +93,9 @@ function AddBookForm() {
   return (
     <MainContainer>
       <TextFieldWrapper>
-        <Label htmlFor="isbn">ISBN</Label>
+        <Label htmlFor="isbn" required>
+          ISBN
+        </Label>
         <Input
           type="text"
           name="isbn"
@@ -106,7 +108,9 @@ function AddBookForm() {
         />
       </TextFieldWrapper>
       <TextFieldWrapper>
-        <Label htmlFor="title">Book Title</Label>
+        <Label htmlFor="title" required>
+          Book Title
+        </Label>
         <Input
           type="text"
           name="title"
@@ -127,7 +131,9 @@ function AddBookForm() {
         onSelectedChange={handleSubcategoryChange}
       />
       <TextFieldWrapper>
-        <Label htmlFor="authors">Authors</Label>
+        <Label htmlFor="authors" required>
+          Authors
+        </Label>
         <Input
           type="text"
           name="authors"
@@ -160,7 +166,9 @@ function AddBookForm() {
         />
       </TextFieldWrapper>
       <TextFieldWrapper>
-        <Label htmlFor="totalCopies">Total Copies</Label>
+        <Label htmlFor="totalCopies" required>
+          Total Copies
+        </Label>
         <Input
           type="number"
           name="totalCopies"

@@ -10,7 +10,17 @@ export const TextFieldWrapper = styled.div`
   margin-bottom: 2em;
 `;
 
-export const Label = styled.label`
+export const Label = styled.label<any>`
   margin-bottom: 0.5em;
-  display: block;
+  position: relative;
+  display: inline-block;
+
+  &::after {
+    content: ${(props) => (props.required ? '"*"' : '""')};
+    color: red;
+    position: absolute;
+    top: 0;
+    right: -1rem;
+    font-size: 1.2rem;
+  }
 `;

@@ -8,6 +8,7 @@ function StudentInfo({ collegeId }: any) {
   useEffect(() => {
     getStudentById(collegeId).then((response) => setStudentInfo(response.data));
   }, []);
+
   return (
     <StudentInfoContainer>
       <NameHeader>{studentInfo?.name}</NameHeader>

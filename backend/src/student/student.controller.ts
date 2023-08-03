@@ -10,18 +10,23 @@ import {
   UseInterceptors,
   BadRequestException,
   UploadedFile,
+  UploadedFiles,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { multerOptions } from 'src/utils/multer-options';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { studentImageOptions } from 'src/utils/multer-options';
+import { ConfigService } from '@nestjs/config';
 
 @ApiTags('students')
 @Controller('students')
 export class StudentController {
-  constructor(private readonly studentService: StudentService) {}
+  constructor(
+    private readonly studentService: StudentService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Post()
   @UseInterceptors(
@@ -50,11 +55,25 @@ export class StudentController {
     return this.studentService.create(createStudentDto, avatar);
   }
 
+  // @Post('bulk')
+  // @UseInterceptors(FileInterceptor('file', multerOptions))
+  // bulkCreate(@UploadedFile() studentCsv: Express.Multer.File) {
+  //   return this.studentService.addStudenBulk(studentCsv);
+  // }
+
   @Post('bulk')
-  @UseInterceptors(FileInterceptor('file', multerOptions))
-  bulkCreate(@UploadedFile() studentCsv: Express.Multer.File) {
-    return this.studentService.addStudenBulk(studentCsv);
+  @UseInterceptors(FilesInterceptor('images', 500, studentImageOptions))
+  bulkData(@UploadedFiles() images, @Body('datas') datas) {
+    const datasInJson: CreateStudentDto[] = JSON.parse(datas);
+    // return datas;
+    return this.studentService.createStudentOnBulk(datasInJson, images);
   }
+
+  // @Post('bulk')
+  // bulkData(@Body() studentCsv: any[]) {
+  //   return this.studentService.creareStudentOnBulk(studentCsv);
+  // }
+
   @ApiQuery({
     name: 'limit',
     example: 20,

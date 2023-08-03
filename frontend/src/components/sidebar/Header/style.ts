@@ -1,10 +1,8 @@
 import styled from "styled-components";
 
-export const LogoContainer = styled.img`
+export const LogoContainer = styled.img<any>`
   display: block;
-  margin-top: 25px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: ${(props) => (props.marginTop ? props.marginTop : "25px")};
   width: 100%;
-  max-width: 140px;
+  max-width: ${(props) => (props.maxWidth ? props.maxWidth : "140px")};
 `;

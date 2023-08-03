@@ -14,12 +14,18 @@ export class DashboardService {
   async fetchMeta() {
     return {
       totalBooks: (await this.bookService.findAll({})).total,
-      totalBorrowed: (await this.issueService.findBorrowedBooks()).length,
+      activeIssues: (await this.issueService.findBorrowedBooks()).length,
       totalExpired: (await this.issueService.findAll({})).data.filter(
         (each: any) =>
           each.isExpired === true && (each as Issue).returned === false,
       ).length,
       totalStudents: (await this.studentService.findAll({})).total,
+      totalIssues: (await this.issueService.findAll({})).total,
+      // studentWithActiveIssue: await this.issueService.findAll(),
     };
+  }
+
+  async fetchWeeklyIssueStats(month?: number, year?: number) {
+    return this.issueService.getWeekelyStat(month, year);
   }
 }

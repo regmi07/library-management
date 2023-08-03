@@ -5,10 +5,11 @@ const DashboardContext = createContext<any>({});
 const { Provider, Consumer } = DashboardContext;
 
 const DashboardProvider = ({ children, ...props }: any) => {
-  const [metaData, setMetaData,] = useState<any>({});
+  const [metaData, setMetaData] = useState<any>({});
 
   useEffect(() => {
     getDashboardCardDetails().then((data) => {
+      console.log(data?.data);
       setMetaData(data?.data);
     });
   }, []);

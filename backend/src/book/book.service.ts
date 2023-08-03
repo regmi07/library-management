@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Issue } from 'src/issues/entities/issue.entity';
-import { Repository, FindOneOptions, Brackets } from 'typeorm';
+import { Repository, FindOneOptions } from 'typeorm';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './entities/book.entity';
@@ -10,50 +10,55 @@ import { Book } from './entities/book.entity';
 import { findBookFromInternet } from './utils/find-book';
 import { CategoryService } from 'src/category/category.service';
 import { SubCategoryService } from 'src/sub-category/sub-category.service';
-import { CsvService } from 'src/csv/csv.service';
+import { LogsService } from 'src/logs/logs.service';
 
 @Injectable()
 export class BookService {
   constructor(
     private readonly httpService: HttpService,
-    private readonly csvService: CsvService,
     @InjectRepository(Book) private readonly bookRepo: Repository<Book>,
     @InjectRepository(Issue) private readonly issueRepo: Repository<Issue>,
     private readonly categoryService: CategoryService,
     private readonly subCategoryService: SubCategoryService,
+    private readonly logService: LogsService,
   ) {}
 
   async create(createBookDto: CreateBookDto) {
-    console.log('create book called');
-    const book = await this.bookRepo.findOne({
-      where: { isbn: createBookDto.isbn },
-    });
-    if (book) throw new BadRequestException('Book already exist');
-    const category = await this.categoryService.findOne(createBookDto.category);
-    if (!category)
-      throw new BadRequestException(
-        HttpStatus.BAD_REQUEST,
-        'Invalid category!! Please select valid category',
-      );
+    try {
+      const book = await this.bookRepo.findOne({
+        where: { isbn: createBookDto.isbn },
+      });
+      if (book)
+        throw new Error(
+          `${createBookDto.isbn} -> ${createBookDto.title} Book already exists on the database!`,
+        );
 
-    const subCategory = await this.subCategoryService.findOne(
-      createBookDto.subCategory,
-    );
-    if (!subCategory)
-      throw new BadRequestException(
-        HttpStatus.BAD_REQUEST,
-        'Invalid sub category!! Please select valid sub category',
-      );
+      // const category = await this.categoryService.findOne(
+      //   createBookDto.category,
+      // );
+      // if (!category)
+      //   throw new Error(
+      //     `${createBookDto.isbn} -> ${createBookDto.title} Invalid category ${createBookDto.category}!! Please select the valid category!`,
+      //   );
 
-    if (!createBookDto.availableCopies) {
-      createBookDto.availableCopies = createBookDto.totalCopies;
+      // const subCategory = await this.subCategoryService.findOne(
+      //   createBookDto.subCategory,
+      // );
+      // if (!subCategory)
+      //   throw new Error(
+      //     `${createBookDto.isbn} -> ${createBookDto.title} Invalid sub category ${createBookDto.subCategory}!! Please select the valid sub category!`,
+      //   );
+
+      if (!createBookDto.availableCopies) {
+        createBookDto.availableCopies = createBookDto.totalCopies;
+      }
+
+      return await this.bookRepo.save({
+        ...createBookDto,
+      });
+    } catch (error) {
+      throw error;
     }
-
-    return await this.bookRepo.save({
-      ...createBookDto,
-      category,
-      subCategory,
-    });
   }
 
   /* 
@@ -63,27 +68,50 @@ export class BookService {
     - return that book object
   */
 
-  async bulkAddBook(csvFile: Express.Multer.File) {
-    console.log('book service called');
-    return await this.csvService.importDataFromCsv<Book>(
-      csvFile,
-      this.bookRepo,
-      (data) => {
-        console.log('callback');
-        const book = new Book();
+  async createBookOnBulk(datas: any[]) {
+    let message = '';
+    let successCount = 0;
 
-        book.isbn = data.isbn;
-        book.title = data.title;
-        book.summary = data.summary;
-        book.authors = data.authors;
-        book.totalCopies = data.totalCopies;
-        book.publisher = data.publisher;
-        book.publishedDate = data.publishedDate;
-        book.availableCopies = data.totalCopies;
-        console.log('Book: ', book);
-        return book;
-      },
-    );
+    for (const book of datas) {
+      try {
+        const typed_book: CreateBookDto = book;
+        await this.create(typed_book);
+        successCount++;
+      } catch (err) {
+        // message += `${err.parameters[0]} ${
+        //   err.parameters[1]
+        // } -> ${err.driverError.toString()}\n`;
+        // console.log(message);
+        message += `${err.message}\n`;
+      }
+    }
+
+    if (datas.length == successCount) {
+      return await this.logService.create({
+        message: 'All the books were added to database successfully',
+        status: 'success',
+      });
+    } else if (successCount) {
+      await this.logService.create({
+        message: `Following books failed to be added on database: \n${message}`,
+        status: 'error',
+      });
+      return {
+        message: `${successCount} books has been added to database and  ${
+          datas.length - successCount
+        } books failed to be added on database. Please view the logs to find out more information.`,
+      };
+    } else {
+      await this.logService.create({
+        message: `All the books failed to be added on database: \n${message}`,
+        status: 'error',
+      });
+
+      return {
+        message:
+          'All the books failed to be added on database. Please view logs to find out more information',
+      };
+    }
   }
 
   async searchBook(isbn: string) {
@@ -169,24 +197,33 @@ export class BookService {
   }
 
   async update(isbn: string, updateBookDto: UpdateBookDto) {
-    const category = await this.categoryService.findOne(updateBookDto.category);
-    if (!category)
-      throw new BadRequestException(
-        HttpStatus.BAD_REQUEST,
-        'Invalid category!! Please select valid category',
-      );
+    // const category = await this.categoryService.findOne(updateBookDto.category);
+    // if (!category)
+    //   throw new BadRequestException(
+    //     HttpStatus.BAD_REQUEST,
+    //     'Invalid category!! Please select valid category',
+    //   );
 
-    const subCategory = await this.subCategoryService.findOne(
-      updateBookDto.subCategory,
-    );
-    if (!subCategory)
-      throw new BadRequestException(
-        HttpStatus.BAD_REQUEST,
-        'Invalid sub category!! Please select valid sub category',
-      );
+    // const subCategory = await this.subCategoryService.findOne(
+    //   updateBookDto.subCategory,
+    // );
+    // if (!subCategory)
+    //   throw new BadRequestException(
+    //     HttpStatus.BAD_REQUEST,
+    //     'Invalid sub category!! Please select valid sub category',
+    //   );
+
+    const book = await this.bookRepo.findOne({ where: { isbn } });
+
     const updated = await this.bookRepo.update(
       { isbn },
-      { ...updateBookDto, category, subCategory },
+      {
+        ...updateBookDto,
+        // category,
+        // subCategory,
+        availableCopies:
+          book.availableCopies + (updateBookDto.totalCopies - book.totalCopies),
+      },
     );
     if (updated.affected)
       return { message: 'book updated successfully.', success: true };

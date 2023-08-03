@@ -1,6 +1,7 @@
 import { bulkAddStudent } from "@/adapters/student.adapter/student";
 import FileInputModal from "@/components/Modal/FIleInputModal";
 import React from "react";
+import { toast } from "react-toastify";
 
 function BulkAddStudent() {
   const [open, setOpen] = React.useState(false);
@@ -9,11 +10,20 @@ function BulkAddStudent() {
     setOpen(!open);
   };
 
-  const saveData = (csvFile: any) => {
+  const saveData = (csvFile: any, images: FileList | null) => {
     const formData = new FormData();
-    formData.append("file", csvFile);
+    if (images?.length) {
+      for (const image of images) {
+        formData.append("images", image);
+      }
+    }
 
-    bulkAddStudent(formData);
+    formData.append("datas", JSON.stringify(csvFile));
+
+    bulkAddStudent(formData).then((response) => {
+      console.log(response);
+      toast.info(response.data.message);
+    });
     handleOnClose();
   };
 

@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { GlobalStyles } from "./styles/global";
 import Sidebar from "./components/sidebar/Sidebar";
 import Body from "./body/Body";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Body />
         </div>
       </div>
+      <Footer />
     </>
   );
 }

@@ -7,7 +7,7 @@ import { Book } from './entities/book.entity';
 import { Issue } from 'src/issues/entities/issue.entity';
 import { CategoryModule } from 'src/category/category.module';
 import { SubCategoryModule } from 'src/sub-category/sub-category.module';
-import { CsvModule } from 'src/csv/csv.module';
+import { LogsModule } from 'src/logs/logs.module';
 
 @Module({
   imports: [
@@ -15,7 +15,7 @@ import { CsvModule } from 'src/csv/csv.module';
     TypeOrmModule.forFeature([Book, Issue]),
     CategoryModule,
     SubCategoryModule,
-    CsvModule,
+    LogsModule,
   ],
   controllers: [BookController],
   providers: [BookService],

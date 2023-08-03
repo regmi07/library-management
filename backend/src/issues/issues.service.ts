@@ -330,4 +330,51 @@ export class IssuesService {
 
     return { expiredIssues, expireDays: settings.renewBefore };
   }
+
+  async getWeekelyStat(month: number, year: number) {
+    // Determine the start and end dates based on user input or current date
+    let startDate: Date;
+    let endDate: Date;
+
+    if (month && year) {
+      startDate = new Date(year, month - 1, 1); // Month is zero-based, so subtract 1 from the input month
+      endDate = new Date(year, month, 0); // Set end date to the last day of the input month
+    } else if (month) {
+      console.log(month);
+      const currentYear = new Date().getFullYear();
+      startDate = new Date(currentYear, month - 1, 1);
+      endDate = new Date(currentYear, month, 0);
+    } else {
+      const today = new Date();
+      const oneYearAgo = new Date(
+        today.getFullYear() - 1,
+        today.getMonth(),
+        today.getDate(),
+      );
+      startDate =
+        year === today.getFullYear()
+          ? oneYearAgo
+          : new Date(today.getFullYear(), 0, 1);
+      endDate =
+        year === today.getFullYear()
+          ? today
+          : new Date(today.getFullYear(), 11, 31);
+    }
+
+    const weekelyStats = await this.issueRepo
+      .createQueryBuilder('issue')
+      .select('STRFTIME("%W",issue.issueDate) AS weekNumber')
+      .addSelect("DATE(issue.issueDate, 'weekday 0', '-6 days') AS startDate")
+      .addSelect("DATE(issue.issueDate, 'weekday 6') AS endDate")
+      .addSelect('COUNT(*) AS issuedBooks')
+      .where('issue.issueDate BETWEEN :startDate AND :endDate', {
+        startDate,
+        endDate,
+      })
+      .groupBy('weekNumber')
+      .orderBy('startDate')
+      .getRawMany();
+
+    return weekelyStats;
+  }
 }

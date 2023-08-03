@@ -12,6 +12,7 @@ import Student from "@/pages/Student";
 import { IconButton } from "@/styles/button";
 import { BackIcon } from "@/components/Icons";
 import Category from "@/pages/Category";
+import Logs from "@/pages/Logs";
 
 function Body() {
   const location = useLocation();
@@ -38,6 +39,7 @@ function Body() {
           <Route path="/manage-user" element={<ManageStudents />}></Route>
           <Route path="/user/:id" element={<Student />}></Route>
           <Route path="/category" element={<Category />}></Route>
+          <Route path="/logs" element={<Logs />}></Route>
           {/* <Route path="/book/:isbn" element={<Book />}></Route> */}
         </Routes>
       </BodyContaier>

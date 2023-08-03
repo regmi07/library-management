@@ -35,7 +35,7 @@ function StudentSelectComponent() {
           labelKey="collegeId"
           selectFor="students"
           data={students}
-          setValue={setStudent}
+          setSelectedValue={setStudent}
           selectedValue={student}
         />
       </InputContainer>
@@ -46,7 +46,7 @@ function StudentSelectComponent() {
           labelKey="name"
           selectFor="students"
           data={students}
-          setValue={setStudent}
+          setSelectedValue={setStudent}
           selectedValue={student}
         />
       </InputContainer>

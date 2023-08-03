@@ -1,7 +1,11 @@
 import { createContext, useContext, useState } from "react";
 import moment from "moment";
-import { issueNewBook } from "@/adapters/issues.adapter/issues";
+import {
+  issueNewBook,
+  getAllIssuedBooks,
+} from "@/adapters/issues.adapter/issues";
 import { toast } from "react-toastify";
+import { data } from "@/components/dashboard/Charts/LineChart";
 
 const IssueBookContext = createContext<any>({});
 const { Provider, Consumer } = IssueBookContext;
@@ -10,17 +14,29 @@ const initialIssueState = {
   isbn: "",
   student: {},
   issueDate: moment().format("YYYY-MM-DD"),
+  availableCopies: NaN,
 };
 
 const IssueBookProvider = ({ children, ...props }: any) => {
   const [issue, setIssue] = useState<any>(initialIssueState);
 
-  const setIsbn = (isbn: string) => {
-    setIssue({ ...issue, isbn: isbn });
+  const setIsbn = (isbn: string, availableCopies: number) => {
+    setIssue({ ...issue, isbn: isbn, availableCopies: availableCopies });
   };
 
   const setStudent = (student: any) => {
-    setIssue({ ...issue, student: student });
+    getAllIssuedBooks({ studentId: student.collegeId, returned: false })
+      .then((response) => {
+        console.log(response);
+        setIssue({
+          ...issue,
+          student: { ...student, issue: response.data.data },
+        });
+      })
+      .catch((error) => {
+        setIssue({ ...issue, student: student });
+        console.log(error);
+      });
   };
 
   const setIssueDate = (date: string) => {

@@ -38,10 +38,14 @@ export const addBook = (bookDetails: BookType) => {
   return post("books", bookDetails);
 };
 
-export const bulkAddBook = (csvFileFormData: any) => {
-  return post("books/bulk", csvFileFormData, {
-    "Content-Type": "multipart/form-data",
-  });
+// export const bulkAddBook = (csvFileFormData: any) => {
+//   return post("books/bulk", csvFileFormData, {
+//     "Content-Type": "multipart/form-data",
+//   });
+// };
+
+export const bulkAddBook = (csvFileFormData: any[]) => {
+  return post("books/bulk", csvFileFormData);
 };
 
 export const deleteBook = (isbn: string) => {

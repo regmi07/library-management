@@ -7,12 +7,11 @@ interface CSVFileInputProps {
 }
 
 const CSVInputField: React.FC<CSVFileInputProps> = ({ onCSVFileLoaded }) => {
-  console.log("this called");
-
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     // event.preventDefault();
     console.log("handleFileChange called");
     const file = event.target.files && event.target.files[0];
+
     if (file) {
       Papa.parse(file, {
         header: true,

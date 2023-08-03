@@ -9,12 +9,14 @@ import {
   AdminInfo,
   AdminName,
   AvatarImage,
-  Label,
+  FormStyle,
+  ImageLabel,
+  InputDiv,
   ProfileData,
 } from "./styles";
 import { EditIcon } from "../Icons";
 import { toast } from "react-toastify";
-import { date } from "yup";
+import { Label } from "../add-book/style";
 
 function Profiledata(props: any) {
   const { name, email, phone } = props;
@@ -129,7 +131,7 @@ function SettingsForm() {
         alt={`${settings?.firstName} ${settings?.lastName} image`}
       />
       <form>
-        <Label>
+        <ImageLabel>
           <EditIcon />
           <Input
             type="file"
@@ -137,14 +139,14 @@ function SettingsForm() {
             style={{ display: "none" }}
             onChange={updateProfileAvatar}
           ></Input>
-        </Label>
+        </ImageLabel>
       </form>
       <Profiledata
         name={`${settings?.firstName} ${settings?.lastName}`}
         email={settings?.email}
         phone={settings?.phone}
       />
-      <div style={{ marginTop: "2em" }}>
+      <div style={{ marginTop: "2em", width: "1000px" }}>
         <div
           style={{
             display: "flex",
@@ -160,9 +162,11 @@ function SettingsForm() {
             Edit
           </PrimaryButton>
         </div>
-        <form>
-          <div>
-            <label htmlFor="firstName">First Name</label>
+        <FormStyle>
+          <InputDiv>
+            <Label htmlFor="firstName" required>
+              First Name
+            </Label>
             <Input
               type="text"
               id="firstName"
@@ -171,9 +175,11 @@ function SettingsForm() {
               value={profile?.firstName ?? ""}
               onChange={handleProfileOnChange}
             />
-          </div>
-          <div>
-            <label htmlFor="lastName">Last Name</label>
+          </InputDiv>
+          <InputDiv>
+            <Label htmlFor="lastName" required>
+              Last Name
+            </Label>
             <Input
               type="text"
               id="lastName"
@@ -182,9 +188,9 @@ function SettingsForm() {
               value={profile?.lastName ?? ""}
               onChange={handleProfileOnChange}
             />
-          </div>
-          <div>
-            <label htmlFor="email">Email</label>
+          </InputDiv>
+          <InputDiv>
+            <Label htmlFor="email">Email</Label>
             <Input
               type="text"
               id="email"
@@ -193,9 +199,9 @@ function SettingsForm() {
               value={profile?.email ?? ""}
               onChange={handleProfileOnChange}
             />
-          </div>
-          <div>
-            <label htmlFor="phone">Phone</label>
+          </InputDiv>
+          <InputDiv>
+            <Label htmlFor="phone">Phone</Label>
             <Input
               type="text"
               id="phone"
@@ -204,17 +210,17 @@ function SettingsForm() {
               value={profile?.phone ?? ""}
               onChange={handleProfileOnChange}
             />
-          </div>
-          <PrimaryButton
-            maxWidth="120px"
-            onClick={handleUpdateProfile}
-            disabled={!editProfile}
-          >
-            Submit
-          </PrimaryButton>
-        </form>
+          </InputDiv>
+        </FormStyle>
+        <PrimaryButton
+          maxWidth="120px"
+          onClick={handleUpdateProfile}
+          disabled={!editProfile}
+        >
+          Submit
+        </PrimaryButton>
       </div>
-      <div style={{ marginTop: "2em" }}>
+      <div style={{ marginTop: "2em", width: "1000px" }}>
         <div
           style={{
             display: "flex",
@@ -230,9 +236,9 @@ function SettingsForm() {
             Edit
           </PrimaryButton>
         </div>
-        <form>
-          <div>
-            <label htmlFor="emailSuffix">Email Suffix</label>
+        <FormStyle>
+          <InputDiv>
+            <Label htmlFor="emailSuffix">Email Suffix</Label>
             <Input
               type="text"
               id="emailSuffix"
@@ -241,9 +247,9 @@ function SettingsForm() {
               value={adminSettings?.emailSuffix ?? ""}
               onChange={handleAdminSettingOnChange}
             />
-          </div>
-          <div>
-            <label htmlFor="fineAmount">Fine Amount (Rs.)</label>
+          </InputDiv>
+          <InputDiv>
+            <Label htmlFor="fineAmount">Fine Amount (Rs.)</Label>
             <Input
               type="number"
               id="fineAmount"
@@ -252,9 +258,9 @@ function SettingsForm() {
               value={adminSettings?.fineAmount ?? 5}
               onChange={handleAdminSettingOnChange}
             />
-          </div>
-          <div>
-            <label htmlFor="maxIssue">Max Issue (Days)</label>
+          </InputDiv>
+          <InputDiv>
+            <Label htmlFor="maxIssue">Max Issue (Days)</Label>
             <Input
               type="number"
               id="maxIssue"
@@ -263,9 +269,9 @@ function SettingsForm() {
               value={adminSettings?.maxIssue ?? 2}
               onChange={handleAdminSettingOnChange}
             />
-          </div>
-          <div>
-            <label htmlFor="maxRenew">Max Renew (Days)</label>
+          </InputDiv>
+          <InputDiv>
+            <Label htmlFor="maxRenew">Max Renew (Days)</Label>
             <Input
               type="number"
               id="maxRenew"
@@ -274,9 +280,9 @@ function SettingsForm() {
               value={adminSettings?.maxRenew ?? 2}
               onChange={handleAdminSettingOnChange}
             />
-          </div>
-          <div>
-            <label htmlFor="renewBefore">Renew Before (Days)</label>
+          </InputDiv>
+          <InputDiv>
+            <Label htmlFor="renewBefore">Renew Before (Days)</Label>
             <Input
               type="number"
               id="renewBefore"
@@ -285,15 +291,15 @@ function SettingsForm() {
               value={adminSettings?.renewBefore ?? 2}
               onChange={handleAdminSettingOnChange}
             />
-          </div>
-          <PrimaryButton
-            maxWidth="120px"
-            onClick={handleUpdateAdminSettings}
-            disabled={!editSettings}
-          >
-            Submit
-          </PrimaryButton>
-        </form>
+          </InputDiv>
+        </FormStyle>
+        <PrimaryButton
+          maxWidth="120px"
+          onClick={handleUpdateAdminSettings}
+          disabled={!editSettings}
+        >
+          Submit
+        </PrimaryButton>
       </div>
     </div>
   );

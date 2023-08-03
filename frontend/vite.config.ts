@@ -44,6 +44,18 @@ export default defineConfig(({ command }) => {
                 external: Object.keys(
                   "dependencies" in pkg ? pkg.dependencies : {}
                 ),
+                output: {
+                  // This tells Vite to inline the web worker code as a Blob.
+                  // By doing this, you can avoid CORS issues when using web workers.
+                  inlineDynamicImports: true,
+                },
+              },
+            },
+            // Add the worker-loader configuration to handle web workers
+            resolve: {
+              alias: {
+                // Map the worker-loader to papaparse in your project
+                papaparse$: "worker-loader?inline&fallback=false!paparse",
               },
             },
           },

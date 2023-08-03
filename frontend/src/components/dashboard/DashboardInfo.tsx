@@ -19,9 +19,15 @@ function DashboardInfo() {
         route="/students"
       />
       <DashboardInfoCard
-        total={metaData.totalBorrowed}
+        total={metaData.activeIssues}
         name="Total Borrowed"
         background="#F39C12"
+        route="/issued"
+      />
+      <DashboardInfoCard
+        total={metaData.totalIssues}
+        name="Total Issues"
+        background="#6495ED"
         route="/issued"
       />
       <DashboardInfoCard

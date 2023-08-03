@@ -91,7 +91,24 @@ function ManageStudentTable() {
             data.map((student: any) => {
               return (
                 <tr key={student.id}>
-                  <td>{student?.name}</td>
+                  <td>
+                    <div style={{ textAlign: "center" }}>
+                      <img
+                        src={
+                          student?.avatar
+                            ? student?.avatar
+                            : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn3.iconfinder.com%2Fdata%2Ficons%2Fonline-learning-flat-1%2F64%2F13_male_student_avatar_people_graduate_education_study-1024.png&f=1&nofb=1&ipt=41f0f9b94cb8542323618589c29774aef6081fd11f6e86c3fcd37c9f7b6faa5f&ipo=images"
+                        }
+                        alt="cover image of the student"
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          borderRadius: "50%",
+                        }}
+                      />
+                      <p>{student?.name}</p>
+                    </div>
+                  </td>
                   <td>{student?.collegeId}</td>
                   {/* <td>
                     <img

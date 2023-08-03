@@ -91,7 +91,9 @@ function AddUserForm() {
           <MainContainer>
             <Form>
               <div style={{ marginBottom: "1em" }}>
-                <Label htmlFor="collegeId">College ID</Label>
+                <Label htmlFor="collegeId" required>
+                  College ID
+                </Label>
                 <InputField
                   type="text"
                   id="collegeId"
@@ -111,7 +113,9 @@ function AddUserForm() {
               </div>
 
               <div style={{ marginBottom: "1em" }}>
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name" required>
+                  Name
+                </Label>
                 <InputField
                   type="text"
                   id="name"
@@ -123,7 +127,9 @@ function AddUserForm() {
               </div>
 
               <div style={{ marginBottom: "1em" }}>
-                <Label htmlFor="contactNumber">Contact Number</Label>
+                <Label htmlFor="contactNumber" required>
+                  Contact Number
+                </Label>
                 <InputField
                   type="text"
                   id="contactNumber"

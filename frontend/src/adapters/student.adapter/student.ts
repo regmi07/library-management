@@ -16,11 +16,15 @@ export const addStudent = (studentDetails: any) => {
   });
 };
 
-export const bulkAddStudent = (csvFileFormData: any) => {
-  return post("students/bulk", csvFileFormData, {
+export const bulkAddStudent = (formData: any) => {
+  return post("students/bulk", formData, {
     "Content-Type": "multipart/form-data",
   });
 };
+
+// export const bulkAddStudent = (csvFile: any[]) => {
+//   return post("students/bulk", csvFile);
+// };
 
 export const getStudentById = (collegeId: string) => {
   return get(`students/${collegeId}`);

@@ -15,7 +15,7 @@ import BooksSelectComponent from "./BooksSelectComponent";
 
 function IssueBooksForm() {
   const {
-    issue: { issueDate },
+    issue: { issueDate, availableCopies },
     issueBook,
   } = useIssueBookContext();
 
@@ -27,6 +27,17 @@ function IssueBooksForm() {
       <HorizontalLine />
       <IssueBookBody>
         <BooksSelectComponent />
+        <div>
+          <Label>Available Copies</Label>
+          <Input
+            type="number"
+            name="availableCopies"
+            id="availableCopies"
+            value={availableCopies}
+            disabled
+            readonly
+          />
+        </div>
         <StudentSelectComponent />
         <IssueDateContainer>
           <div style={{ flex: 1 }}>
@@ -36,6 +47,7 @@ function IssueBooksForm() {
               name="issue-date"
               id="issue-date"
               value={issueDate}
+              disabled
               readOnly
             />
           </div>

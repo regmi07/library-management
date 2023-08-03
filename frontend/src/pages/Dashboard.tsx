@@ -7,6 +7,8 @@ function Dashboard() {
       <div>
         <h1>This is an Dashboard</h1>
         <DashboardInfo />
+        {/* <LineChart /> */}
+        {/* <IssueBookBarChart /> */}
       </div>
     </DashboardProvider>
   );

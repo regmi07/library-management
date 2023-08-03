@@ -41,6 +41,7 @@ export const Status = styled.div<any>`
   padding: 0.15em 0.2em;
   font-weight: 800;
   border-radius: 4px;
+  margin-top: ${(props) => (props.marginTop ? props.marginTop : "0.2em")};
   border: 2px solid
     ${(props) => {
       if (props.isReturned) return "#0F730D";

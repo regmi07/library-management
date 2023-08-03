@@ -17,6 +17,7 @@ import { EmailSchedulerService } from './email_scheduler/email_scheduler.service
 import { CsvService } from './csv/csv.service';
 import { CsvModule } from './csv/csv.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { LogsModule } from './logs/logs.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { MulterModule } from '@nestjs/platform-express';
     SubCategoryModule,
     EmailModule,
     CsvModule,
+    LogsModule,
   ],
   controllers: [AppController],
   providers: [

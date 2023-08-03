@@ -28,16 +28,13 @@ function SelectComponent({
   const [inputValue, setInputValue] = useState("");
 
   const handleChange = (value: any) => {
-    if (!setSelectedValue) {
-      setValue(value);
-    } else {
-      setSelectedValue(value);
-      setValue(value[idKey]);
-    }
-    // setSelectedValue(value);
-    // if (setValue) {
+    // if (!setSelectedValue) {
     //   setValue(value);
+    // } else {
+    //   setSelectedValue(value);
+    //   setValue(value[idKey]);
     // }
+    setSelectedValue(value);
   };
 
   const handleInputChange = (input: any) => {

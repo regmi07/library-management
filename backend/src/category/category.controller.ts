@@ -15,8 +15,8 @@ export class CategoryController {
 
   @Get()
   async searchCategories(
-    @Query('limit') limit?: number,
-    @Query('skip') skip?: number,
+    @Query('limit') limit = 10,
+    @Query('skip') skip = 0,
     @Query('search') search?: string,
   ) {
     return this.categoryService.findAll({ limit, skip, search });
